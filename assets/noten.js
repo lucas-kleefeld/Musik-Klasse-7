@@ -17,6 +17,7 @@
      C4/4@c'   Beschriftung unter der Note (_ = Leerzeichen)
      ?/4       Platzhalter (Kästchen mit Fragezeichen)
      _         etwas Abstand
+     ~         Haltebogen zur nächsten Note
    ========================================================= */
 (function (wurzel, fabrik) {
   if (typeof module === "object" && module.exports) module.exports = fabrik(require("../werkzeug/glyphen.json"));
@@ -52,6 +53,7 @@
       if (t === ")" || t === "]") { gruppe = null; continue; }
       if (t === "|" || t === "||" || t === "|.") { out.push({ typ: "strich", art: t }); continue; }
       if (t === "_") { out.push({ typ: "abstand" }); continue; }
+      if (t === "~") { out.push({ typ: "bindung" }); continue; }
       if (t[0] === "!") { dyn = t.slice(1); continue; }
       if (t === "<(" || t === ">(" || t === "<)" || t === ">)") { out.push({ typ: "gabel", art: t }); continue; }
       if (t[0] === "{") { out.push({ typ: "bogen", text: t.slice(1, -1) }); continue; }
@@ -88,7 +90,7 @@
     var mitte = rhythmus ? y0 + 2 * SP : null;
     var bass = spec.schluessel === "bass", BASIS = bass ? 18 : 30, MID = BASIS + 4;
     function y(st) { return rhythmus ? mitte : yUnten - (st - BASIS) * SP / 2; }
-    var svg = [], x = SP * 0.8, notenX = [], hairpins = [], dyns = [], boegen = [], gruppen = {};
+    var svg = [], x = SP * 0.8, notenX = [], hairpins = [], dyns = [], boegen = [], bindungen = [], gruppen = {};
     var hatLabel = elemente.some(function (e) { return e.label; });
     var hatDyn = elemente.some(function (e) { return e.dyn; }) || elemente.some(function (e) { return e.typ === "gabel"; });
 
@@ -127,6 +129,7 @@
       if (e.typ === "abstand") { x += 1.5 * SP; return; }
       if (e.typ === "gabel") { e.x = x; hairpins.push(e); return; }
       if (e.typ === "bogen") { boegen.push({ idx: idx, text: e.text }); return; }
+      if (e.typ === "bindung") { bindungen.push(idx); return; }
       var vzBreite = 0;
       if (e.toene) e.toene.forEach(function (t) { if (t.vz) vzBreite = 1.4 * SP; });
       x += vzBreite;
@@ -286,6 +289,21 @@
         svg.push('<path class="klammer" d="M' + r(xa) + " " + r(yk + 0.8 * SP) + " V" + r(yk) + " H" + r(xm - 1 * SP) + " M" + r(xm + 1 * SP) + " " + r(yk) + " H" + r(xb) + " V" + r(yk + 0.8 * SP) + '"/>');
         svg.push(glyph("tuplet3", xm - 0.6 * SP, yk + 0.7 * SP, 1));
       }
+    });
+
+    // Haltebögen
+    bindungen.forEach(function (idx) {
+      var vor = null, nach = null;
+      for (var i = idx - 1; i >= 0; i--) if (elemente[i].typ === "note") { vor = elemente[i]; break; }
+      for (i = idx + 1; i < elemente.length; i++) if (elemente[i].typ === "note") { nach = elemente[i]; break; }
+      if (!vor || !nach || !vor.toene || !nach.toene) return;
+      var kb = G[vor.dauer === 1 ? "noteheadWhole" : "noteheadBlack"].w * SP;
+      var oben = vor.unten;                       // Bogen gegenüber vom Hals
+      vor.toene.forEach(function (t) {
+        var yy = y(t.st) + (oben ? -0.75 : 0.75) * SP, x1 = vor.x + kb * 0.75, x2 = nach.x + kb * 0.25, h = (oben ? -1 : 1) * Math.min(1.6 * SP, 0.25 * (x2 - x1) + 0.4 * SP);
+        var xm = (x1 + x2) / 2;
+        svg.push('<path class="ng' + (vor.hl ? " hl" : "") + '" d="M' + r(x1) + " " + r(yy) + " Q" + r(xm) + " " + r(yy + h) + " " + r(x2) + " " + r(yy) + " Q" + r(xm) + " " + r(yy + h * 0.72) + " " + r(x1) + " " + r(yy) + 'Z"/>');
+      });
     });
 
     // Bögen (Halbton/Ganzton)

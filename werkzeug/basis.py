@@ -15,7 +15,7 @@ STUFEN = {
 KAPITEL = [
     (1, "01-notenwerte", "Notenwerte und Takt", 1),
     (2, "02-pausen", "Pausen", 1),
-    (3, "03-punktierung-triolen", "Punktierte Noten und Triolen", 1),
+    (3, "03-punktierung-triolen", "Punktierte Noten, Haltebögen und Triolen", 1),
     (4, "04-violinschluessel", "Noten im Violinschlüssel", 2),
     (5, "05-bassschluessel", "Noten im Bassschlüssel", 2),
     (6, "06-vorzeichen", "Vorzeichen", 2),

@@ -1,4 +1,4 @@
-"""Kapitel 1 bis 3: Notenwerte und Takt, Pausen, Punktierung und Triolen."""
+"""Kapitel 1 bis 3: Notenwerte und Takt, Pausen, Punktierung, Haltebögen und Triolen."""
 from notensatz import N
 from zeichnungen import svg, g, note, text, notenlinien
 
@@ -95,7 +95,7 @@ KAPITEL[1] = {
    {"frage": "Wie viele Sechzehntel ergeben eine Viertel?", "optionen": ["4", "2", "8", "16"], "richtig": 0, "erklaerung": "1 Viertel = 2 Achtel = 4 Sechzehntel."},
    {"frage": "Was ist gleich lang wie eine ganze Note?", "optionen": [{"noten": "C4/2 C4/4 C4/4", "spec": R}, {"noten": "C4/2 C4/4", "spec": R}, {"noten": "C4/4 C4/4 C4/4", "spec": R}, {"noten": "C4/2 ( C4/8 C4/8 )", "spec": R}], "richtig": 0, "erklaerung": "2 + 1 + 1 = 4 Viertel."},
    {"frage": "Was bedeutet die untere Zahl der Taktangabe 3/4?", "optionen": ["Es werden Viertel gezählt.", "Es gibt vier Takte.", "Der Takt hat vier Schläge.", "Man spielt viermal so schnell."], "richtig": 0, "erklaerung": "Die obere Zahl nennt die Anzahl: drei Viertel pro Takt."},
-   {"frage": "Wie zählt man vier Sechzehntel auf einen Schlag?", "optionen": ["1 e und e", "1 und 2 und", "1 2 3 4", "1 trio le"], "richtig": 0, "erklaerung": "Die Sechzehntel teilen den Schlag in vier Teile."}
+   {"frage": "Wie zählt man vier Sechzehntel auf einen Schlag?", "optionen": ["1 e und e", "1 und 2 und", "1 2 3 4", "1 tri o"], "richtig": 0, "erklaerung": "Die Sechzehntel teilen den Schlag in vier Teile."}
   ]}},
  {"slug": "k1-takt-vervollstaendigen", "titel": "Quiz: Was fehlt im Takt?", "kurz": "Takte mit dem passenden Notenwert vervollständigen", "typ": "notenquiz", "symbol": "rhythmus",
   "anleitung": "Welcher Notenwert gehört an die Stelle mit dem Fragezeichen, damit der Takt genau voll ist?",
@@ -196,9 +196,9 @@ KAPITEL[2] = {
 
 # ======================================================================
 KAPITEL[3] = {
-"kurz": "Wie ein Punkt eine Note verlängert, typische punktierte Rhythmen und Triolen.",
+"kurz": "Wie Punkt und Haltebogen eine Note verlängern, typische punktierte Rhythmen und Triolen.",
 "inhalt": f"""
-<p class="lead">Mit den Grundwerten allein lassen sich viele Rhythmen nicht aufschreiben. Zwei Werkzeuge helfen: der Punkt und die Triole.</p>
+<p class="lead">Mit den Grundwerten allein lassen sich viele Rhythmen nicht aufschreiben. Drei Werkzeuge helfen: der Punkt, der Haltebogen und die Triole.</p>
 
 <h2>Punktierte Noten</h2>
 <p>Ein <span class="fachwort">Punkt</span> rechts neben dem Notenkopf verlängert die Note <strong>um die Hälfte ihres Wertes</strong>. Das gilt genauso für Pausen.</p>
@@ -214,17 +214,28 @@ KAPITEL[3] = {
 {N("C4/2.@1_2_3 C4/4@4 | C4/4.@1_(2) C4/8@und C4/2@3_4 | ( C4/8.@1 C4/16@e ) ( C4/8.@2 C4/16@e ) C4/2@3 |.", "Typische punktierte Rhythmen. Die Zählzeit in Klammern wird nicht neu angeschlagen.", takt="4/4", rhythmus=True)}
 <p>Die Kombination punktierte Achtel und Sechzehntel klingt hüpfend und kommt in vielen Liedern vor, zum Beispiel in Märschen.</p>
 
+<h2>Haltebögen</h2>
+<p>Ein <span class="fachwort">Haltebogen</span> verbindet <strong>zwei Noten mit derselben Tonhöhe</strong>. Die zweite Note wird nicht neu angeschlagen, sondern weiter gehalten. Die Dauern der beiden Noten werden <strong>zusammengezählt</strong>.</p>
+{N("G4/2@1_2 ~ G4/4@(3) G4/4@4 | G4/4@1 G4/4@2 G4/2@3_4 |.", "Halbe + Viertel durch einen Haltebogen verbunden: Der Ton klingt drei Schläge lang.", takt="4/4", zoom=1.5)}
+<p>Haltebögen braucht man vor allem dann, wenn ein Ton <strong>über den Taktstrich hinaus</strong> klingen soll. Ein Notenwert allein darf nämlich nicht über den Taktstrich ragen.</p>
+{N("C5/2 C5/4 G4/4 ~ | G4/2 E4/2 |.", "Das g′ beginnt auf Schlag 4 und klingt über den Taktstrich bis zum Ende von Schlag 2 im nächsten Takt.", takt="4/4", zoom=1.5)}
+<p>Oft kann man denselben Rhythmus mit einem Punkt oder mit einem Haltebogen aufschreiben. Beides klingt gleich:</p>
+{N("C4/2.@3_Schläge || C4/2@2 ~ C4/4@+_1_=_3", "Punktierte Halbe oder Halbe mit Haltebogen an eine Viertel: beides dauert drei Schläge.", rhythmus=True, zoom=1.5)}
+{N("C4/4.@1½_Schläge || C4/4@1 ~ C4/8@+_½_=_1½", "Punktierte Viertel oder Viertel mit Haltebogen an eine Achtel", rhythmus=True, zoom=1.5)}
+<p>Achtung, nicht verwechseln: Ein <strong>Bindebogen</strong> sieht ähnlich aus, verbindet aber Noten mit <strong>verschiedenen</strong> Tonhöhen. Er bedeutet, dass die Töne gebunden (legato) gespielt werden. Ein Haltebogen verbindet immer nur gleiche Töne.</p>
+
 <h2>Triolen</h2>
 <p>Eine <span class="fachwort">Triole</span> sind <strong>drei Noten, die in der Zeit von zwei gleichen Noten</strong> gespielt werden. Sie wird mit einer 3 über oder unter den Noten gekennzeichnet.</p>
-{N("( C4/8@1 C4/8@und ) 3( C4/8@2 C4/8@tri C4/8@ole ) C4/4@3 3( C4/8@4 C4/8@tri C4/8@ole ) |", "Achteltriole: drei Achtel in der Zeit von zwei Achteln, also in einem Schlag", takt="4/4", rhythmus=True)}
+{N("( C4/8@1 C4/8@und ) 3( C4/8@2 C4/8@tri C4/8@o ) C4/4@3 3( C4/8@4 C4/8@tri C4/8@o ) |", "Achteltriole: drei Achtel in der Zeit von zwei Achteln, also in einem Schlag", takt="4/4", rhythmus=True)}
 {N("C4/4@1 C4/4@2 C4/4@3 C4/4@4 | 3[ C4/4@1 C4/4 C4/4 ] 3[ C4/4@3 C4/4 C4/4 ] |", "Viertel-Triole: drei Viertel in der Zeit von zwei Vierteln", takt="4/4", rhythmus=True)}
-<p>Beim Zählen sagt man für die Achteltriole oft „1-tri-o-le“ mit drei gleich langen Silben, oder man spricht ein dreisilbiges Wort wie „Ananas“ auf jeden Schlag.</p>
+<p>Beim Zählen spricht man für die Achteltriole drei gleich lange Silben auf jeden Schlag: „1-tri-o, 2-tri-o, 3-tri-o …“. Man kann auch ein dreisilbiges Wort wie „Ananas“ auf jeden Schlag sprechen.</p>
 
 <div class="merke"><strong>Merke</strong>
-<p>Ein Punkt verlängert eine Note oder Pause um die Hälfte ihres Wertes: Eine punktierte Halbe dauert drei Viertel. Eine Triole besteht aus drei Noten, die zusammen so lang sind wie zwei Noten desselben Wertes.</p></div>
+<p>Ein Punkt verlängert eine Note oder Pause um die Hälfte ihres Wertes: Eine punktierte Halbe dauert drei Viertel. Ein Haltebogen verbindet zwei gleiche Töne, ihre Dauern werden addiert; so kann ein Ton auch über den Taktstrich klingen. Eine Triole besteht aus drei Noten, die zusammen so lang sind wie zwei Noten desselben Wertes.</p></div>
 """,
 "aufgaben": [
  ("I", "Erkläre, was ein Punkt hinter einer Note bewirkt. Gib drei Beispiele mit ihrer Dauer in Vierteln an.", 4, ""),
+ ("I", "Erkläre, was ein Haltebogen ist und wie er sich von einem Bindebogen unterscheidet.", 3, ""),
  ("I", "Erkläre, was eine Triole ist.", 3, ""),
  ("II", "Berechne die Dauer in Achteln: punktierte Halbe, punktierte Viertel, Achteltriole, Viertel-Triole.", 3, ""),
  ("II", "Setze die fehlenden Taktstriche und schreibe die Zählzeiten darunter.", 0, N("C4/4. C4/8 C4/2 C4/2. C4/4 3( C4/8 C4/8 C4/8 ) C4/4 C4/2 |.", takt="4/4", rhythmus=True)),
@@ -247,6 +258,19 @@ KAPITEL[3] = {
    {"frage": "Ist dieser Takt vollständig?", "noten": "C4/4. C4/4. C4/4 |", "spec": {"rhythmus": True, "takt": "3/4"}, "optionen": ["nein, zu lang", "ja, genau drei Viertel", "nein, zu kurz"], "richtig": 0, "erklaerung": "1½ + 1½ + 1 = 4 Viertel – einer zu viel."},
    {"frage": "Ist dieser Takt vollständig?", "noten": "3( C4/8 C4/8 C4/8 ) C4/4 C4/8 |", "spec": {"rhythmus": True, "takt": "3/4"}, "optionen": ["nein, zu kurz", "ja, genau drei Viertel", "nein, zu lang"], "richtig": 0, "erklaerung": "1 + 1 + ½ = 2½ – eine Achtel fehlt."}
   ]}},
+ {"slug": "k3-haltebogen", "titel": "Quiz: Haltebögen", "kurz": "Gebundene Noten zusammenzählen", "typ": "notenquiz", "symbol": "punktierung",
+  "anleitung": "Zähle die Dauern der gebundenen Noten zusammen. Mit „Anhören“ hörst du, wie lange der Ton klingt.",
+  "daten": {"hoeren": True, "fragen": [
+   {"frage": "Wie viele Schläge (Viertel) klingt der erste Ton?", "noten": "G4/2 ~ G4/4 C5/4 |", "spec": {"takt": "4/4"}, "optionen": ["3", "2", "4", "1"], "richtig": 0, "erklaerung": "Halbe (2) + Viertel (1) = 3."},
+   {"frage": "Wie viele Schläge klingt der gebundene Ton?", "noten": "C5/4 E4/4 E4/2 ~ | E4/2 G4/2 |", "spec": {"takt": "4/4"}, "optionen": ["4", "2", "3", "6"], "richtig": 0, "erklaerung": "Halbe + Halbe = 4 Schläge, über den Taktstrich hinweg."},
+   {"frage": "Wie viele Schläge klingt der gebundene Ton?", "noten": "A4/4 ~ A4/8 G4/8 F4/2 |", "spec": {"takt": "4/4"}, "optionen": ["1½", "1", "2", "¾"], "richtig": 0, "erklaerung": "Viertel (1) + Achtel (½) = 1½."},
+   {"frage": "Was ist gleich lang wie diese gebundenen Noten?", "noten": "C4/2 ~ C4/4", "spec": R, "optionen": [{"noten": "C4/2.", "spec": R}, {"noten": "C4/1", "spec": R}, {"noten": "C4/4.", "spec": R}, {"noten": "C4/2", "spec": R}], "richtig": 0, "erklaerung": "Halbe + Viertel = punktierte Halbe."},
+   {"frage": "Was ist gleich lang wie diese gebundenen Noten?", "noten": "C4/4 ~ C4/8", "spec": R, "optionen": [{"noten": "C4/4.", "spec": R}, {"noten": "C4/2", "spec": R}, {"noten": "C4/8.", "spec": R}, {"noten": "C4/2.", "spec": R}], "richtig": 0, "erklaerung": "Viertel + Achtel = punktierte Viertel."},
+   {"frage": "Welche Noten darf ein Haltebogen verbinden?", "optionen": ["nur Noten mit derselben Tonhöhe", "Noten mit verschiedener Tonhöhe", "nur Noten im selben Takt", "nur Noten mit Punkt"], "richtig": 0, "erklaerung": "Verschiedene Töne verbindet der Bindebogen (legato)."},
+   {"frage": "Wird die zweite Note eines Haltebogens neu angeschlagen?", "optionen": ["Nein, der Ton wird weiter gehalten.", "Ja, sie wird leiser angeschlagen.", "Ja, sie wird betont.", "Nur über dem Taktstrich."], "richtig": 0, "erklaerung": "Darum heißt er Haltebogen."},
+   {"frage": "Wozu braucht man Haltebögen besonders?", "optionen": ["damit ein Ton über den Taktstrich klingen kann", "damit Töne lauter werden", "damit man drei Noten in zwei spielen kann", "damit ein Ton kürzer wird"], "richtig": 0, "erklaerung": "Ein einzelner Notenwert darf nicht über den Taktstrich ragen."},
+   {"frage": "Ein Ton soll im 4/4-Takt auf Schlag 3 beginnen und bis Schlag 2 des nächsten Taktes klingen. Wie schreibt man das?", "optionen": ["Halbe, Haltebogen über den Taktstrich, Halbe", "eine ganze Note auf Schlag 3", "punktierte Halbe auf Schlag 3", "zwei Halbe ohne Bogen"], "richtig": 0, "erklaerung": "2 Schläge im ersten Takt + 2 im zweiten, verbunden durch den Haltebogen."}
+  ]}},
  {"slug": "k1-3-training", "titel": "Training: Rhythmus komplett", "kurz": "Notenwerte, Pausen, Punkte und Triolen gemischt", "typ": "notenquiz", "symbol": "quiz", "training": True,
   "anleitung": "Zehn gemischte Fragen zu den Kapiteln 1 bis 3.",
   "daten": {"fragen": [
@@ -255,7 +279,7 @@ KAPITEL[3] = {
    {"frage": "Welche Taktangabe passt?", "noten": "C4/4. C4/8 C4/4 | C4/2. |", "spec": R, "optionen": ["3/4", "4/4", "2/4", "6/8"], "richtig": 0, "erklaerung": "1½ + ½ + 1 = 3 Viertel."},
    {"frage": "Welche Taktangabe passt?", "noten": "( C4/8 C4/8 C4/8 ) ( C4/8 C4/8 C4/8 ) | C4/4. C4/4. |", "spec": R, "optionen": ["6/8", "3/4", "4/4", "2/4"], "richtig": 0, "erklaerung": "Sechs Achtel in zwei Dreiergruppen: 6/8."},
    {"frage": "Was fehlt im 4/4-Takt?", "noten": "3( C4/8 C4/8 C4/8 ) R/4 C4/4 ?/4 |", "spec": {"rhythmus": True, "takt": "4/4"}, "optionen": [{"noten": "C4/4", "spec": R}, {"noten": "C4/2", "spec": R}, {"noten": "C4/8", "spec": R}, {"noten": "C4/4.", "spec": R}], "richtig": 0, "erklaerung": "Triole (1) + Pause (1) + Viertel (1) = 3, es fehlt eine Viertel."},
-   {"frage": "Wie zählt man eine Achteltriole auf Schlag 2?", "optionen": ["2 tri ole", "2 und", "2 e und e", "2 3 4"], "richtig": 0, "erklaerung": "Drei gleich lange Silben auf einen Schlag."},
+   {"frage": "Wie zählt man eine Achteltriole auf Schlag 2?", "optionen": ["2 tri o", "2 und", "2 e und e", "2 3 4"], "richtig": 0, "erklaerung": "Drei gleich lange Silben auf einen Schlag."},
    {"frage": "Welche Rhythmen sind gleich lang?", "optionen": [{"noten": "C4/2. C4/4", "spec": R}, {"noten": "C4/2. C4/2", "spec": R}, {"noten": "C4/4. C4/4", "spec": R}, {"noten": "C4/2 C4/8", "spec": R}], "frage2": "", "richtig": 0, "erklaerung": "3 + 1 = 4 Viertel = eine ganze Note."},
    {"frage": "Welche Pause hängt unter der vierten Linie?", "optionen": ["die ganze Pause", "die halbe Pause", "die Viertelpause", "die Achtelpause"], "richtig": 0, "erklaerung": "Die halbe liegt auf der Mittellinie."},
    {"frage": "Wie viele Schläge dauert eine punktierte halbe Pause?", "optionen": ["3", "2", "1½", "4"], "richtig": 0, "erklaerung": "Der Punkt wirkt bei Pausen genauso."},

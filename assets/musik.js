@@ -106,22 +106,30 @@
     var el = N.parse(text), viertel = 60 / (opt.tempo || 92), t = 0.05, tonart = opt.tonart || 0, takt = {}, trio = null;
     var gen = {};
     for (var k = 0; k < Math.abs(tonart); k++) gen[(tonart > 0 ? KREUZE : BES)[k]] = tonart > 0 ? 1 : -1;
+    var ereignisse = [], gebunden = false;
     el.forEach(function (e) {
       if (e.typ === "strich") { takt = {}; return; }
+      if (e.typ === "bindung") { gebunden = true; return; }
       if (e.typ !== "note" || e.frage) return;
       var d = 4 / e.dauer * viertel; if (e.punkt) d *= 1.5;
       if (e.gruppe && e.gruppe.triole) d *= 2 / 3;
+      if (gebunden && ereignisse.length && !e.pause) { ereignisse[ereignisse.length - 1].d += d; gebunden = false; t += d; return; }
+      gebunden = false;
       if (!e.pause) {
-        if (opt.rhythmus) holz(t, d);
-        else e.toene.forEach(function (tt) {
+        var ms = opt.rhythmus ? [] : e.toene.map(function (tt) {
           var b = STAMM[tt.st % 7], o = Math.floor(tt.st / 7), acc;
           if (tt.vz) { acc = { "#": 1, b: -1, n: 0 }[tt.vz]; takt[tt.st] = acc; }
           else if (takt[tt.st] != null) acc = takt[tt.st];
           else acc = gen[b] || 0;
-          ton(12 * (o + 1) + HALB[b] + acc, t, d * 0.95);
+          return 12 * (o + 1) + HALB[b] + acc;
         });
+        ereignisse.push({ t: t, d: d, ms: ms });
       }
       t += d;
+    });
+    ereignisse.forEach(function (ev) {
+      if (opt.rhythmus) holz(ev.t, ev.d);
+      else ev.ms.forEach(function (m) { ton(m, ev.t, ev.d * 0.95); });
     });
     return t;
   }
