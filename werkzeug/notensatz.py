@@ -30,7 +30,9 @@ def N(noten, unterschrift="", titel="", klasse="", spiel=True, **spec):
     cap = f"<figcaption>{unterschrift}</figcaption>" if unterschrift else ""
     daten_spiel = spiel
     spiel = ""
-    if daten_spiel and noten.strip() and "?" not in noten:
+    import re as _re
+    hat_toene = bool(_re.search(r"(^|\s|\(|\[|\*)\[?[A-G]", noten))   # nur Pausen: nichts zum Anhören
+    if daten_spiel and hat_toene and "?" not in noten:
         daten = {"noten": noten, "tonart": spec.get("tonart", 0), "rhythmus": bool(spec.get("rhythmus"))}
         spiel = " data-spiel='" + html.escape(json.dumps(daten, ensure_ascii=False), quote=True) + "'"
     bild = svg(noten, **spec)
