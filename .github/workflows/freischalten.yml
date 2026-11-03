@@ -1,0 +1,46 @@
+# Erzeugt die Seiten neu, sobald freigabe.json (oder ein Inhalt in werkzeug/) geändert wird.
+# Gesperrte Kapitel werden dabei nicht veröffentlicht.
+name: Seiten neu erzeugen
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "freigabe.json"
+      - "werkzeug/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: seiten-bauen
+  cancel-in-progress: false
+
+jobs:
+  bauen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Seiten erzeugen
+        run: cd werkzeug && python3 bauen.py
+      - name: Änderungen speichern
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Keine Änderungen."
+          else
+            git commit -m "Seiten neu erzeugt (Freischaltung)"
+            git push
+          fi
+      - name: Website aktualisieren
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"

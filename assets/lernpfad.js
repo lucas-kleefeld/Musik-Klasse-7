@@ -1,0 +1,2 @@
+/* automatisch erzeugt aus freigabe.json und den Kapiteln */
+window.LERNPFAD = {"stufenweise": true, "namen": {"1": "Rhythmus", "2": "Tonhöhe und Lautstärke"}, "stufen": {"1": ["k1-notenwerte", "k1-takt-vervollstaendigen", "k1-begriffe", "k2-pausen", "k2-wert-sortieren", "k3-punkt-triole", "k1-3-training"], "2": ["k4-noten-lesen", "k4-noten-lesen-oktave", "k4-noten-notieren", "k4-woerter", "k5-bass-lesen", "k5-bass-lesen-oktave", "k5-bass-notieren", "k5-bass-quiz", "k5-lesen", "k5-notieren", "k5-quiz", "k6-zuordnen", "k6-reihenfolge", "k6-quiz"]}};

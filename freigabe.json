@@ -1,0 +1,12 @@
+{
+  "Hinweis": "Zum Freischalten eines Kapitels false durch true ersetzen und speichern (Commit). Zum Sperren true durch false ersetzen. Die Website aktualisiert sich nach etwa zwei Minuten.",
+  "Stufen nacheinander freischalten": true,
+  "Hinweis zu den Stufen": "Bei true werden die Stufen für Schülerinnen und Schüler erst sichtbar, wenn sie alle Übungen der vorherigen Stufe gelöst haben (mindestens 80 Prozent richtig). Bei false sind alle freigeschalteten Kapitel sofort zugänglich.",
+  "Kapitel 1": true,
+  "Kapitel 2": true,
+  "Kapitel 3": true,
+  "Kapitel 4": true,
+  "Kapitel 5": true,
+  "Kapitel 6": true,
+  "Kapitel 7": true
+}
