@@ -57,15 +57,28 @@ KAPITEL[1] = {
   <li>Die <strong>untere Zahl</strong> nennt den Notenwert, der gezählt wird (4 = Viertel, 8 = Achtel).</li>
   <li>Die <strong>obere Zahl</strong> sagt, wie viele davon in einen Takt passen.</li>
 </ul>
-{N("C4/4@1 C4/4@2 C4/4@3 C4/4@4 | C4/2@1 C4/2@3 | C4/1@1 |.", "4/4-Takt: vier Viertel pro Takt. Statt 4/4 steht oft ein C.", takt="4/4", rhythmus=True)}
-{N("C4/4@1 C4/4@2 C4/4@3 | C4/2@1 C4/4@3 | C4/2.@1 |.", "3/4-Takt: drei Viertel pro Takt, zum Beispiel beim Walzer", takt="3/4", rhythmus=True)}
-{N("C4/4@1 C4/4@2 | C4/2@1 |.", "2/4-Takt: zwei Viertel pro Takt, zum Beispiel beim Marsch", takt="2/4", rhythmus=True)}
-{N("( C4/8@1 C4/8@2 C4/8@3 ) ( C4/8@4 C4/8@5 C4/8@6 ) | C4/4.@1 C4/4.@4 |.", "6/8-Takt: sechs Achtel pro Takt, gefühlt in zwei Gruppen zu je drei", takt="6/8", rhythmus=True)}
+{N("C4/4@1 C4/4@2 C4/4@3 C4/4@4 | C4/2@1(2) C4/2@3(4) | C4/1@1(2,3,4) |.", "4/4-Takt: vier Viertel pro Takt. Statt 4/4 steht oft ein C.", takt="4/4", rhythmus=True)}
+{N("C4/4@1 C4/4@2 C4/4@3 | C4/2@1(2) C4/4@3 | C4/2.@1(2,3) |.", "3/4-Takt: drei Viertel pro Takt, zum Beispiel beim Walzer", takt="3/4", rhythmus=True)}
+{N("C4/4@1 C4/4@2 | C4/2@1(2) |.", "2/4-Takt: zwei Viertel pro Takt, zum Beispiel beim Marsch", takt="2/4", rhythmus=True)}
+{N("( C4/8@1 C4/8@2 C4/8@3 ) ( C4/8@4 C4/8@5 C4/8@6 ) | C4/4.@1(2,3) C4/4.@4(5,6) |.", "6/8-Takt: sechs Achtel pro Takt, gefühlt in zwei Gruppen zu je drei", takt="6/8", rhythmus=True)}
 <p>Die erste Zählzeit eines Taktes ist am stärksten betont. Im 4/4-Takt ist auch die 3 betont, aber etwas schwächer.</p>
 
 <h2>Richtig zählen</h2>
-<p>Damit man auch kurze Notenwerte genau spielt, teilt man die Schläge beim Zählen weiter auf:</p>
-{N("C4/4@1 C4/4@2 ( C4/8@3 C4/8@und ) ( C4/8@4 C4/8@und ) | ( C4/16@1 C4/16@e C4/16@und C4/16@e ) ( C4/8@2 C4/8@und ) C4/2@3 |.", "Viertel: 1, 2, … – Achtel: 1 und 2 und – Sechzehntel: 1 e und e", takt="4/4", rhythmus=True)}
+<p>Unter die Noten schreibt man die <span class="fachwort">Zählzeiten</span>. Zählzeiten, auf denen eine Note nur weiterklingt, stehen in Klammern: Sie werden mitgezählt, aber nicht neu gespielt. Im 4/4-Takt schreibt man so:</p>
+<div class="tabelle-scroll"><table>
+  <thead><tr><th>Notenwert (Note oder Pause)</th><th>Zählzeiten</th></tr></thead>
+  <tbody>
+    <tr><td>ganze Note, ganze Pause</td><td><strong>1(2,3,4)</strong></td></tr>
+    <tr><td>halbe Note, halbe Pause</td><td><strong>1(2)</strong> oder <strong>3(4)</strong></td></tr>
+    <tr><td>Viertelnote, Viertelpause</td><td><strong>1, 2, 3, 4</strong></td></tr>
+    <tr><td>Achtelnote, Achtelpause</td><td><strong>1 + 2 + 3 + 4 +</strong></td></tr>
+    <tr><td>Sechzehntelnote, Sechzehntelpause</td><td><strong>1 a + a, 2 a + a, 3 a + a, 4 a + a</strong></td></tr>
+  </tbody>
+</table></div>
+<p>Das + spricht man „und“. Damit man auch kurze Notenwerte genau spielt, teilt man die Schläge beim Zählen also immer weiter auf:</p>
+{N("C4/1@1(2,3,4) | C4/2@1(2) C4/2@3(4) | C4/4@1 C4/4@2 C4/4@3 C4/4@4 |", "Ganze, Halbe und Viertel mit Zählzeiten", takt="4/4", rhythmus=True)}
+{N("( C4/8@1 C4/8@+ ) ( C4/8@2 C4/8@+ ) ( C4/8@3 C4/8@+ ) ( C4/8@4 C4/8@+ ) | ( C4/16@1 C4/16@a C4/16@+ C4/16@a ) ( C4/16@2 C4/16@a C4/16@+ C4/16@a ) ( C4/16@3 C4/16@a C4/16@+ C4/16@a ) ( C4/16@4 C4/16@a C4/16@+ C4/16@a ) |", "Achtel: 1 + 2 + 3 + 4 + – Sechzehntel: 1 a + a, 2 a + a …", takt="4/4", rhythmus=True)}
+{N("C4/4@1 C4/4@2 ( C4/8@3 C4/8@+ ) ( C4/8@4 C4/8@+ ) | ( C4/16@1 C4/16@a C4/16@+ C4/16@a ) ( C4/8@2 C4/8@+ ) C4/2@3(4) |.", "Gemischte Notenwerte mit Zählzeiten", takt="4/4", rhythmus=True)}
 <p>Beginnt ein Lied nicht auf der Eins, sondern mit einem unvollständigen Takt, spricht man von einem <span class="fachwort">Auftakt</span>. Der letzte Takt ist dann um genau diese Länge kürzer.</p>
 <p><a class="knopf leise" href="../werkzeuge/taktbaukasten.html">Takte im Taktbaukasten selbst bauen und anhören</a></p>
 
@@ -76,7 +89,7 @@ KAPITEL[1] = {
  ("I", "Zeichne den Notenbaum von der ganzen Note bis zu den Sechzehnteln ab und beschrifte jede Zeile.", 0, ""),
  ("I", "Nenne die Bestandteile einer Achtelnote.", 2, ""),
  ("II", "Berechne: Wie viele Achtel passen in eine halbe Note? Wie viele Sechzehntel in eine Viertel? Wie viele Viertel in zwei ganze Noten?", 3, ""),
- ("II", "Schreibe unter jede Note die Zählzeiten (1, 2, 3, 4 bzw. 1 und 2 und).", 0,
+ ("II", "Schreibe unter jede Note die Zählzeiten (1, 2, 3, 4 bzw. 1 + 2 + oder 1(2) für eine halbe Note).", 0,
   N("C4/4 ( C4/8 C4/8 ) C4/2 | ( C4/8 C4/8 ) ( C4/8 C4/8 ) C4/4 C4/4 | C4/1 |.", takt="4/4", rhythmus=True)),
  ("II", "Setze die fehlenden Taktstriche. Achte auf die Taktangabe.", 0,
   N("C4/4 C4/4 C4/4 C4/2 C4/4 ( C4/8 C4/8 ) C4/4 C4/4 C4/2. |.", takt="3/4", rhythmus=True)),
@@ -95,7 +108,7 @@ KAPITEL[1] = {
    {"frage": "Wie viele Sechzehntel ergeben eine Viertel?", "optionen": ["4", "2", "8", "16"], "richtig": 0, "erklaerung": "1 Viertel = 2 Achtel = 4 Sechzehntel."},
    {"frage": "Was ist gleich lang wie eine ganze Note?", "optionen": [{"noten": "C4/2 C4/4 C4/4", "spec": R}, {"noten": "C4/2 C4/4", "spec": R}, {"noten": "C4/4 C4/4 C4/4", "spec": R}, {"noten": "C4/2 ( C4/8 C4/8 )", "spec": R}], "richtig": 0, "erklaerung": "2 + 1 + 1 = 4 Viertel."},
    {"frage": "Was bedeutet die untere Zahl der Taktangabe 3/4?", "optionen": ["Es werden Viertel gezählt.", "Es gibt vier Takte.", "Der Takt hat vier Schläge.", "Man spielt viermal so schnell."], "richtig": 0, "erklaerung": "Die obere Zahl nennt die Anzahl: drei Viertel pro Takt."},
-   {"frage": "Wie zählt man vier Sechzehntel auf einen Schlag?", "optionen": ["1 e und e", "1 und 2 und", "1 2 3 4", "1 tri o"], "richtig": 0, "erklaerung": "Die Sechzehntel teilen den Schlag in vier Teile."}
+   {"frage": "Wie zählt man vier Sechzehntel auf einen Schlag?", "optionen": ["1 a + a", "1 + 2 +", "1 2 3 4", "1 tri o"], "richtig": 0, "erklaerung": "Die Sechzehntel teilen den Schlag in vier Teile."}
   ]}},
  {"slug": "k1-takt-vervollstaendigen", "titel": "Quiz: Was fehlt im Takt?", "kurz": "Takte mit dem passenden Notenwert vervollständigen", "typ": "notenquiz", "symbol": "rhythmus",
   "anleitung": "Welcher Notenwert gehört an die Stelle mit dem Fragezeichen, damit der Takt genau voll ist?",
@@ -154,7 +167,7 @@ KAPITEL[2] = {
 
 <h2>Pausen im Takt</h2>
 <p>Pausen werden genauso mitgezählt wie Noten. Noten und Pausen zusammen müssen den Takt genau füllen.</p>
-{N("C4/4@1 R/4@2 C4/4@3 R/4@4 | C4/2@1 R/2@3 | R/4@1 C4/4@2 R/8@3 C4/8@und C4/4@4 | C4/2@1 R/2@3 |.", "Noten und Pausen im 4/4-Takt mit Zählzeiten", takt="4/4", rhythmus=True)}
+{N("C4/4@1 R/4@2 C4/4@3 R/4@4 | C4/2@1(2) R/2@3(4) | R/4@1 C4/4@2 R/8@3 C4/8@+ C4/4@4 | C4/2@1(2) R/2@3(4) |.", "Noten und Pausen im 4/4-Takt mit Zählzeiten", takt="4/4", rhythmus=True)}
 <p>Eine Besonderheit: Soll in einem Takt gar nichts gespielt werden, schreibt man immer eine <strong>ganze Pause</strong> in die Mitte des Taktes, egal welche Taktart gilt. Sie heißt dann <span class="fachwort">Ganztaktpause</span>.</p>
 {N("C4/4 C4/4 C4/4 | R/1 | C4/2. |.", "Im 3/4-Takt steht die ganze Pause für einen ganzen Takt Stille.", takt="3/4", rhythmus=True)}
 
@@ -211,12 +224,12 @@ KAPITEL[3] = {
   </tbody>
 </table></div>
 <p>Punktierte Noten stehen fast immer zusammen mit einer kurzen Note, die den angebrochenen Schlag auffüllt:</p>
-{N("C4/2.@1_2_3 C4/4@4 | C4/4.@1_(2) C4/8@und C4/2@3_4 | ( C4/8.@1 C4/16@e ) ( C4/8.@2 C4/16@e ) C4/2@3 |.", "Typische punktierte Rhythmen. Die Zählzeit in Klammern wird nicht neu angeschlagen.", takt="4/4", rhythmus=True)}
+{N("C4/2.@1(2,3) C4/4@4 | C4/4.@1(2) C4/8@+ C4/2@3(4) | ( C4/8.@1(a+) C4/16@a ) ( C4/8.@2(a+) C4/16@a ) C4/2@3(4) |.", "Typische punktierte Rhythmen. Die Zählzeiten in Klammern werden mitgezählt, aber nicht neu angeschlagen.", takt="4/4", rhythmus=True)}
 <p>Die Kombination punktierte Achtel und Sechzehntel klingt hüpfend und kommt in vielen Liedern vor, zum Beispiel in Märschen.</p>
 
 <h2>Haltebögen</h2>
 <p>Ein <span class="fachwort">Haltebogen</span> verbindet <strong>zwei Noten mit derselben Tonhöhe</strong>. Die zweite Note wird nicht neu angeschlagen, sondern weiter gehalten. Die Dauern der beiden Noten werden <strong>zusammengezählt</strong>.</p>
-{N("G4/2@1_2 ~ G4/4@(3) G4/4@4 | G4/4@1 G4/4@2 G4/2@3_4 |.", "Halbe + Viertel durch einen Haltebogen verbunden: Der Ton klingt drei Schläge lang.", takt="4/4", zoom=1.5)}
+{N("G4/2@1(2) ~ G4/4@(3) G4/4@4 | G4/4@1 G4/4@2 G4/2@3(4) |.", "Halbe + Viertel durch einen Haltebogen verbunden: Der Ton klingt drei Schläge lang.", takt="4/4", zoom=1.5)}
 <p>Haltebögen braucht man vor allem dann, wenn ein Ton <strong>über den Taktstrich hinaus</strong> klingen soll. Ein Notenwert allein darf nämlich nicht über den Taktstrich ragen.</p>
 {N("C5/2 C5/4 G4/4 ~ | G4/2 E4/2 |.", "Das g′ beginnt auf Schlag 4 und klingt über den Taktstrich bis zum Ende von Schlag 2 im nächsten Takt.", takt="4/4", zoom=1.5)}
 <p>Oft kann man denselben Rhythmus mit einem Punkt oder mit einem Haltebogen aufschreiben. Beides klingt gleich:</p>
@@ -226,7 +239,7 @@ KAPITEL[3] = {
 
 <h2>Triolen</h2>
 <p>Eine <span class="fachwort">Triole</span> sind <strong>drei Noten, die in der Zeit von zwei gleichen Noten</strong> gespielt werden. Sie wird mit einer 3 über oder unter den Noten gekennzeichnet.</p>
-{N("( C4/8@1 C4/8@und ) 3( C4/8@2 C4/8@tri C4/8@o ) C4/4@3 3( C4/8@4 C4/8@tri C4/8@o ) |", "Achteltriole: drei Achtel in der Zeit von zwei Achteln, also in einem Schlag", takt="4/4", rhythmus=True)}
+{N("( C4/8@1 C4/8@+ ) 3( C4/8@2 C4/8@tri C4/8@o ) C4/4@3 3( C4/8@4 C4/8@tri C4/8@o ) |", "Achteltriole: drei Achtel in der Zeit von zwei Achteln, also in einem Schlag", takt="4/4", rhythmus=True)}
 {N("C4/4@1 C4/4@2 C4/4@3 C4/4@4 | 3[ C4/4@1 C4/4 C4/4 ] 3[ C4/4@3 C4/4 C4/4 ] |", "Viertel-Triole: drei Viertel in der Zeit von zwei Vierteln", takt="4/4", rhythmus=True)}
 <p>Beim Zählen spricht man für die Achteltriole drei gleich lange Silben auf jeden Schlag: „1-tri-o, 2-tri-o, 3-tri-o …“. Man kann auch ein dreisilbiges Wort wie „Ananas“ auf jeden Schlag sprechen.</p>
 
@@ -279,7 +292,7 @@ KAPITEL[3] = {
    {"frage": "Welche Taktangabe passt?", "noten": "C4/4. C4/8 C4/4 | C4/2. |", "spec": R, "optionen": ["3/4", "4/4", "2/4", "6/8"], "richtig": 0, "erklaerung": "1½ + ½ + 1 = 3 Viertel."},
    {"frage": "Welche Taktangabe passt?", "noten": "( C4/8 C4/8 C4/8 ) ( C4/8 C4/8 C4/8 ) | C4/4. C4/4. |", "spec": R, "optionen": ["6/8", "3/4", "4/4", "2/4"], "richtig": 0, "erklaerung": "Sechs Achtel in zwei Dreiergruppen: 6/8."},
    {"frage": "Was fehlt im 4/4-Takt?", "noten": "3( C4/8 C4/8 C4/8 ) R/4 C4/4 ?/4 |", "spec": {"rhythmus": True, "takt": "4/4"}, "optionen": [{"noten": "C4/4", "spec": R}, {"noten": "C4/2", "spec": R}, {"noten": "C4/8", "spec": R}, {"noten": "C4/4.", "spec": R}], "richtig": 0, "erklaerung": "Triole (1) + Pause (1) + Viertel (1) = 3, es fehlt eine Viertel."},
-   {"frage": "Wie zählt man eine Achteltriole auf Schlag 2?", "optionen": ["2 tri o", "2 und", "2 e und e", "2 3 4"], "richtig": 0, "erklaerung": "Drei gleich lange Silben auf einen Schlag."},
+   {"frage": "Wie zählt man eine Achteltriole auf Schlag 2?", "optionen": ["2 tri o", "2 +", "2 a + a", "2 3 4"], "richtig": 0, "erklaerung": "Drei gleich lange Silben auf einen Schlag."},
    {"frage": "Welche Rhythmen sind gleich lang?", "optionen": [{"noten": "C4/2. C4/4", "spec": R}, {"noten": "C4/2. C4/2", "spec": R}, {"noten": "C4/4. C4/4", "spec": R}, {"noten": "C4/2 C4/8", "spec": R}], "frage2": "", "richtig": 0, "erklaerung": "3 + 1 = 4 Viertel = eine ganze Note."},
    {"frage": "Welche Pause hängt unter der vierten Linie?", "optionen": ["die ganze Pause", "die halbe Pause", "die Viertelpause", "die Achtelpause"], "richtig": 0, "erklaerung": "Die halbe liegt auf der Mittellinie."},
    {"frage": "Wie viele Schläge dauert eine punktierte halbe Pause?", "optionen": ["3", "2", "1½", "4"], "richtig": 0, "erklaerung": "Der Punkt wirkt bei Pausen genauso."},
