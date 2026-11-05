@@ -550,3 +550,14 @@ main.stufe-gesperrt { display: none; }
 .stufe.gesperrt { box-shadow: 5px 6px 0 var(--linie); }
 .stufe.gesperrt .kap-karte { filter: grayscale(.8); opacity: .6; cursor: not-allowed; }
 .liste a.geloest .kachel::after { content: "✓"; position: absolute; right: -0.4rem; bottom: -0.4rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: var(--richtig); color: var(--flaeche); font-weight: 700; display: grid; place-items: center; font-size: 0.95rem; }
+
+/* ---------- Taktstriche setzen ---------- */
+.ts-buehne { padding-bottom: 0; }
+.ts-knopf { position: absolute; transform: translate(-50%, -50%); width: 1.5rem; height: 4.2rem; border: 0; background: transparent; cursor: pointer; padding: 0; }
+.ts-knopf::before { content: ""; position: absolute; left: 50%; top: 10%; bottom: 10%; border-left: 2px dashed var(--linie); transform: translateX(-50%); }
+.ts-knopf:hover::before, .ts-knopf:focus-visible::before { border-left-color: var(--farbe); }
+.ts-knopf:focus-visible { outline: 2px solid var(--farbe); border-radius: 4px; }
+.ts-knopf[aria-pressed="true"]::before { border-left: 3px solid var(--tinte); top: 0; bottom: 0; }
+.ts-knopf.ist-richtig::before { border-left-color: var(--richtig); }
+.ts-knopf.ist-falsch::before { border-left-color: var(--falsch); }
+.ts-knopf.ist-loesung::before { border-left: 3px dashed var(--richtig); top: 0; bottom: 0; }

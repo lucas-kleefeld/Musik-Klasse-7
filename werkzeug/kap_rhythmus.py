@@ -25,6 +25,28 @@ NOTENBAUM = (
     + N("( C4/16 C4/16 C4/16 C4/16 ) ( C4/16 C4/16 C4/16 C4/16 ) ( C4/16 C4/16 C4/16 C4/16 ) ( C4/16 C4/16 C4/16 C4/16 )", rhythmus=True, zoom=1.4, spiel=False)
 )
 
+
+
+def takt_aufgabe(takt, takte):
+    """takte: Liste von Takten, jeder Takt eine Liste von Tokens. Ergebnis: Aufgabe ohne Taktstriche."""
+    from fractions import Fraction as F
+    z, n = map(int, takt.split("/"))
+    soll = F(z, n)
+    loesung, zaehler = [], 0
+    for t in takte:
+        summe, anzahl = F(0), 0
+        for tok in " ".join(t).split():
+            if tok in ("(", ")", "3(", "3["):
+                continue
+            wert = tok.split("/")[1]
+            d = F(1, int(wert.rstrip("."))) * (F(3, 2) if wert.endswith(".") else 1)
+            summe += soll if tok == "R/1" else d
+            anzahl += 1
+        assert summe == soll, (takt, t, summe)
+        zaehler += anzahl
+        loesung.append(zaehler - 1)
+    return {"takt": takt, "noten": " ".join(" ".join(t) for t in takte), "loesung": loesung[:-1]}
+
 KAPITEL = {}
 
 # ======================================================================
@@ -123,6 +145,16 @@ KAPITEL[1] = {
    {"frage": "Welche Taktangabe passt?", "noten": "C4/4 C4/4 C4/4 | C4/2 C4/4 | C4/4 ( C4/8 C4/8 ) C4/4 |", "spec": R, "optionen": ["3/4", "4/4", "2/4", "6/8"], "richtig": 0, "erklaerung": "Jeder Takt enthält drei Viertel."},
    {"frage": "Welche Taktangabe passt?", "noten": "C4/2 C4/2 | C4/4 C4/4 C4/2 | C4/1 |", "spec": R, "optionen": ["4/4", "3/4", "2/4", "6/8"], "richtig": 0, "erklaerung": "Jeder Takt enthält vier Viertel."}
   ]}},
+ {"slug": "k1-taktstriche", "titel": "Taktstriche setzen", "kurz": "Takte in 2/4, 3/4 und 4/4 richtig abteilen", "typ": "taktstriche", "symbol": "rhythmus",
+  "anleitung": "Achte auf die Taktangabe und zähle mit. Tippe zwischen zwei Noten, um dort einen Taktstrich zu setzen; noch einmal tippen nimmt ihn wieder weg. Der Schlussstrich ist schon da.",
+  "daten": {"aufgaben": [
+   takt_aufgabe("2/4", [["C4/4", "C4/4"], ["C4/2"], ["( C4/8 C4/8 )", "C4/4"], ["( C4/16 C4/16 C4/16 C4/16 )", "C4/4"]]),
+   takt_aufgabe("2/4", [["( C4/8 C4/8 )", "( C4/8 C4/8 )"], ["C4/4", "( C4/8 C4/8 )"], ["C4/2"], ["C4/4", "C4/4"]]),
+   takt_aufgabe("3/4", [["C4/2", "C4/4"], ["C4/4", "C4/4", "C4/4"], ["( C4/8 C4/8 )", "C4/2"], ["C4/4", "( C4/16 C4/16 C4/16 C4/16 )", "C4/4"]]),
+   takt_aufgabe("3/4", [["C4/4", "C4/2"], ["( C4/8 C4/8 )", "( C4/8 C4/8 )", "C4/4"], ["C4/2", "( C4/8 C4/8 )"], ["C4/4", "C4/4", "C4/4"]]),
+   takt_aufgabe("4/4", [["C4/2", "C4/4", "C4/4"], ["C4/1"], ["( C4/8 C4/8 )", "C4/4", "C4/2"], ["C4/4", "( C4/16 C4/16 C4/16 C4/16 )", "C4/2"]]),
+   takt_aufgabe("4/4", [["C4/4", "C4/4", "C4/2"], ["( C4/8 C4/8 )", "( C4/8 C4/8 )", "C4/2"], ["C4/1"], ["C4/2", "C4/2"]])
+  ]}},
  {"slug": "k1-begriffe", "titel": "Zuordnen: Begriffe rund um Note und Takt", "kurz": "Fachbegriffe und ihre Bedeutung", "typ": "zuordnen", "symbol": "zuordnen",
   "anleitung": "Wähle zu jedem Begriff die passende Erklärung.",
   "daten": {"paare": [
@@ -195,6 +227,16 @@ KAPITEL[2] = {
    {"frage": "Welche Pause fehlt im 2/4-Takt?", "noten": "C4/4 C4/8 ?/8 |", "spec": {"rhythmus": True, "takt": "2/4"}, "optionen": [{"noten": "R/8", "spec": {"schluessel": False, "oben": 4, "unten": 1}}, {"noten": "R/4", "spec": {"schluessel": False, "oben": 4, "unten": 1}}, {"noten": "R/16", "spec": {"schluessel": False, "oben": 4, "unten": 1}}, {"noten": "R/2", "spec": {"schluessel": False, "oben": 4, "unten": 1}}], "richtig": 0, "erklaerung": "Es fehlt eine Achtel."},
    {"frage": "Ein ganzer Takt im 3/4-Takt soll still sein. Was schreibt man?", "optionen": ["eine ganze Pause", "eine halbe Pause mit Punkt", "drei Achtelpausen", "nichts"], "richtig": 0, "erklaerung": "Für einen leeren Takt steht immer die ganze Pause (Ganztaktpause)."},
    {"frage": "Wie viele Achtelpausen sind so lang wie eine halbe Pause?", "optionen": ["4", "2", "8", "3"], "richtig": 0, "erklaerung": "Halbe = 2 Viertel = 4 Achtel."}
+  ]}},
+ {"slug": "k2-taktstriche", "titel": "Taktstriche setzen mit Pausen", "kurz": "Takte mit Noten und Pausen in 2/4, 3/4 und 4/4 abteilen", "typ": "taktstriche", "symbol": "pausen",
+  "anleitung": "Pausen zählen genauso mit wie Noten. Denk daran: Eine ganze Pause füllt immer einen ganzen Takt, auch im 2/4- oder 3/4-Takt. Tippe zwischen zwei Zeichen, um einen Taktstrich zu setzen.",
+  "daten": {"aufgaben": [
+   takt_aufgabe("2/4", [["C4/4", "R/4"], ["R/1"], ["( C4/8 C4/8 )", "R/4"], ["R/8", "C4/8", "C4/4"]]),
+   takt_aufgabe("2/4", [["R/4", "C4/4"], ["C4/8", "R/8", "C4/4"], ["R/1"], ["C4/2"]]),
+   takt_aufgabe("3/4", [["C4/4", "R/4", "C4/4"], ["C4/2", "R/4"], ["R/1"], ["C4/4", "C4/4", "C4/4"]]),
+   takt_aufgabe("3/4", [["R/4", "C4/2"], ["C4/8", "R/8", "C4/4", "R/4"], ["C4/4", "R/2"], ["C4/2", "R/4"]]),
+   takt_aufgabe("4/4", [["C4/4", "R/4", "C4/2"], ["R/2", "C4/4", "C4/4"], ["R/1"], ["C4/2", "R/2"]]),
+   takt_aufgabe("4/4", [["C4/8", "R/8", "C4/4", "R/4", "C4/4"], ["C4/2", "R/4", "C4/4"], ["R/16", "C4/16", "C4/8", "C4/4", "R/2"], ["C4/1"]])
   ]}},
  {"slug": "k2-wert-sortieren", "titel": "Sortieren: Wie lang ist das?", "kurz": "Noten und Pausen nach ihrer Dauer ordnen", "typ": "sortieren", "symbol": "sortieren",
   "anleitung": "Wie viele Viertel dauert das? Ordne zu und klicke dann auf „Prüfen“.",
