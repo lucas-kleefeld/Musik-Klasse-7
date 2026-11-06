@@ -561,3 +561,9 @@ main.stufe-gesperrt { display: none; }
 .ts-knopf.ist-richtig::before { border-left-color: var(--richtig); }
 .ts-knopf.ist-falsch::before { border-left-color: var(--falsch); }
 .ts-knopf.ist-loesung::before { border-left: 3px dashed var(--richtig); top: 0; bottom: 0; }
+
+.code-form { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.6rem; margin: 0.2rem 0 0.9rem; font-size: 0.95rem; }
+.code-form input { width: 4.6em; font: inherit; font-size: 1.1rem; letter-spacing: 0.25em; text-align: center; padding: 0.25rem 0.3rem; border: 2px solid var(--tinte); border-radius: 8px; background: var(--flaeche); color: var(--tinte); }
+.code-form input:focus { outline: 3px solid var(--farbe); }
+.code-meldung { font-weight: 700; color: var(--falsch); }
+.stufe.gesperrt .code-form { position: relative; z-index: 1; }

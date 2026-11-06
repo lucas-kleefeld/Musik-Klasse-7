@@ -37,6 +37,7 @@ Die Einstellungen stehen in der Datei [`freigabe.json`](freigabe.json). Ändern:
 
 Wichtig zur stufenweisen Freischaltung:
 
+- **Codes:** Unter „Codes“ steht für jede Stufe ab Stufe 2 ein vierstelliger Code. Wer ihn bei einer gesperrten Stufe eingibt, schaltet diese Stufe (und alle davor) auf dem jeweiligen Gerät sofort frei, ohne die Übungen zu lösen. Die nächste Stufe öffnet sich dann wieder über die Übungen oder ihren eigenen Code. Codes ändern: in `freigabe.json` neue vier Ziffern eintragen und speichern. Auf der Website steht nur eine Prüfsumme, nicht der Code selbst; im öffentlichen Repository ist `freigabe.json` aber lesbar.
 - Der Fortschritt wird nur im Browser des jeweiligen Geräts gespeichert (localStorage). Es wird nichts übertragen, und es gibt keine Anmeldung. Auf einem anderen Gerät oder nach dem Löschen der Browserdaten beginnt man wieder bei Stufe 1. Auf der Startseite gibt es einen Knopf zum Zurücksetzen.
 - Erlaubt ein Browser keine Speicherung (z. B. bestimmte private Fenster), sind alle Stufen offen.
 - Die Sperre ist eine Lernhilfe, kein Schutz: Technisch versierte Schülerinnen und Schüler können sie umgehen. Wirklich verbergen lassen sich Inhalte nur über die Kapitel-Schalter.

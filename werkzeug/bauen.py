@@ -25,7 +25,21 @@ STUFENWEISE = _frei.get("Stufen nacheinander freischalten", True) is True
 notensatz.glyphen_js(os.path.join(REPO, "assets", "glyphen.js"))
 
 # Lernpfad für die Freischaltung der Stufen (wird im Browser ausgewertet)
-_pfad = {"stufenweise": STUFENWEISE, "namen": {str(k): v[0] for k, v in STUFEN.items()}, "stufen": {}}
+def _pruefsumme(text):
+    """FNV-1a (32 Bit), muss zu fortschritt.js passen. Im Seitentext steht so nicht der Code selbst."""
+    h = 2166136261
+    for ch in text.encode("utf-8"):
+        h = ((h ^ ch) * 16777619) & 0xFFFFFFFF
+    return format(h, "08x")
+
+
+_codes = {}
+for _k, _v in (_frei.get("Codes") or {}).items():
+    _n = _k.split()[-1]
+    _c = str(_v).strip()
+    if _c.isdigit() and len(_c) == 4:
+        _codes[_n] = _pruefsumme("notenlehre-" + _n + "-" + _c)
+_pfad = {"stufenweise": STUFENWEISE, "namen": {str(k): v[0] for k, v in STUFEN.items()}, "stufen": {}, "codes": _codes}
 for _nr, _slug, _t, _st in KAPITEL:
     if _nr in FREI:
         _pfad["stufen"].setdefault(str(_st), []).extend(u["slug"] for u in INHALT[_nr]["uebungen"] if u["slug"] != "abschlusstest")
