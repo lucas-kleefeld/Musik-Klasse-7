@@ -32,10 +32,10 @@ def klaviatur_bild(von=0, n=15, namen="stamm", markiert=(), titel="Klaviatur", b
     return svg(f"0 {-20 if namen == 'beide' else 0} {x0 * 2 + n * w} {h + 50 + (20 if namen == 'beide' else 0)}", i, titel, beschreibung)
 
 
-def lese_aufgaben(toene_listen, oktave=False, spec=None):
+def lese_aufgaben(toene_listen, oktave=False, spec=None, wert="1"):
     out = []
     for toene in toene_listen:
-        out.append({"noten": " ".join(f"{t}/1" for t in toene), "spec": spec or {}, "antworten": [T.antwort(t, oktave) for t in toene]})
+        out.append({"noten": " ".join(f"{t}/{wert}" for t in toene), "spec": spec or {}, "antworten": [T.antwort(t, oktave) for t in toene]})
     return out
 
 
@@ -55,11 +55,11 @@ KAPITEL[4] = {
 <h2>Notensystem und Violinschlüssel</h2>
 <p>Noten werden in ein <span class="fachwort">Notensystem</span> aus <strong>fünf Linien</strong> und <strong>vier Zwischenräumen</strong> geschrieben. Linien und Zwischenräume werden <strong>von unten nach oben</strong> gezählt. Noten können auf einer Linie liegen (die Linie geht durch den Notenkopf) oder in einem Zwischenraum.</p>
 <p>Der <span class="fachwort">Violinschlüssel</span> heißt auch <strong>G-Schlüssel</strong>: Er beginnt auf der zweiten Linie und umkreist sie. Auf dieser Linie liegt das g′.</p>
-{N("G4/1@g′ |", "Der Violinschlüssel legt fest: Auf der zweiten Linie liegt g′.", zoom=1.8)}
+{N("G4/4@g′ |", "Der Violinschlüssel legt fest: Auf der zweiten Linie liegt g′.", zoom=1.8)}
 
 <h2>Die Stammtöne</h2>
 <p>Die sieben <span class="fachwort">Stammtöne</span> heißen <strong>c – d – e – f – g – a – h</strong>. Danach beginnt die Reihe wieder von vorn, nur eine <strong>Oktave</strong> höher. Achtung: Im Deutschen heißt der siebte Ton <strong>h</strong>, nicht b. Das b ist ein anderer Ton (siehe Kapitel 6).</p>
-{N(T.ganze(STAMMTOENE, [T.name(t, True) for t in STAMMTOENE]), "Die Stammtöne vom eingestrichenen c bis zum zweigestrichenen a", zoom=1.7)}
+{N(T.ganze(STAMMTOENE, [T.name(t, True) for t in STAMMTOENE]).replace("/1", "/4"), "Die Stammtöne vom eingestrichenen c bis zum zweigestrichenen a", zoom=1.7)}
 <p>Damit man weiß, in welcher Oktave ein Ton liegt, bekommt sein Name Striche:</p>
 <ul>
   <li><strong>eingestrichene Oktave:</strong> c′ d′ e′ f′ g′ a′ h′ (gesprochen „c eins“ oder „eingestrichenes c“)</li>
@@ -69,12 +69,12 @@ KAPITEL[4] = {
 
 <h2>Hilfslinien</h2>
 <p>Für Töne über oder unter dem Notensystem zeichnet man kurze <span class="fachwort">Hilfslinien</span>. Das c′ liegt auf der ersten Hilfslinie unter dem System, das a″ auf der ersten Hilfslinie darüber.</p>
-{N("C4/1@c′ D4/1@d′ _ G5/1@g″ A5/1@a″", "Hilfslinien unter und über dem Notensystem", zoom=1.7)}
+{N("C4/4@c′ D4/4@d′ _ G5/4@g″ A5/4@a″", "Hilfslinien unter und über dem Notensystem", zoom=1.7)}
 
 <h2>Merksätze</h2>
 <div class="zwei-spalten">
-  <div>{N("E4/1@e′ G4/1@g′ B4/1@h′ D5/1@d″ F5/1@f″", "Töne auf den Linien", zoom=1.5)}<p class="legende">„<strong>E</strong>s <strong>G</strong>eht <strong>H</strong>urtig <strong>D</strong>urch <strong>F</strong>leiß“</p></div>
-  <div>{N("F4/1@f′ A4/1@a′ C5/1@c″ E5/1@e″", "Töne in den Zwischenräumen", zoom=1.5)}<p class="legende">Von unten gelesen ergibt sich das Wort <strong>FACE</strong>.</p></div>
+  <div>{N("E4/4@e′ G4/4@g′ B4/4@h′ D5/4@d″ F5/4@f″", "Töne auf den Linien", zoom=1.5)}<p class="legende">„<strong>E</strong>s <strong>G</strong>eht <strong>H</strong>urtig <strong>D</strong>urch <strong>F</strong>leiß“</p></div>
+  <div>{N("F4/4@f′ A4/4@a′ C5/4@c″ E5/4@e″", "Töne in den Zwischenräumen", zoom=1.5)}<p class="legende">Von unten gelesen ergibt sich das Wort <strong>FACE</strong>.</p></div>
 </div>
 
 <h2>Wohin zeigt der Notenhals?</h2>
@@ -101,16 +101,16 @@ KAPITEL[4] = {
 "uebungen": [
  {"slug": "k4-noten-lesen", "titel": "Noten lesen: Stammtöne", "kurz": "Notennamen von c′ bis a″ eintragen", "typ": "notenlesen", "symbol": "lesen",
   "anleitung": "Schreibe unter jede Note ihren Namen (ohne Oktavstriche, z. B. „g“). Prüfen kannst du, wenn alle Felder ausgefüllt sind.",
-  "daten": {"aufgaben": lese_aufgaben(_lesen1)}},
+  "daten": {"aufgaben": lese_aufgaben(_lesen1, wert="4")}},
  {"slug": "k4-noten-lesen-oktave", "titel": "Noten lesen mit Oktave", "kurz": "Namen mit Oktavstrichen, z. B. g′ oder c″", "typ": "notenlesen", "symbol": "lesen",
   "anleitung": "Schreibe die Namen mit Oktavstrichen: g' oder g1 für das eingestrichene g, c'' oder c2 für das zweigestrichene c.",
-  "daten": {"oktave": True, "aufgaben": lese_aufgaben(_lesen2, oktave=True)}},
+  "daten": {"oktave": True, "aufgaben": lese_aufgaben(_lesen2, oktave=True, wert="4")}},
  {"slug": "k4-noten-notieren", "titel": "Noten notieren", "kurz": "Töne per Klick ins Notensystem setzen", "typ": "notieren", "symbol": "notieren",
   "anleitung": "Klicke im Notensystem auf die richtige Linie oder den richtigen Zwischenraum. Mit „Zurück“ nimmst du eine Note wieder weg.",
   "daten": {"aufgaben": [{"frage": f"Notiere {T.name(t, True)}", "ziel": [t]} for t in ["G4", "C5", "E4", "A5", "D4", "F5", "B4", "C4"]]}},
  {"slug": "k4-woerter", "titel": "Notenrätsel", "kurz": "Wörter aus Notennamen lesen", "typ": "notenlesen", "symbol": "lesen",
   "anleitung": "Jede Zeile ergibt ein Wort. Schreibe unter jede Note ihren Namen.",
-  "daten": {"aufgaben": lese_aufgaben([["C5", "A4", "F4", "E4"], ["B4", "E4", "F4", "E5"], ["E4", "G4", "G4", "E4"], ["D5", "A4", "C5", "B4"], ["F4", "A4", "C5", "B4"]])}},
+  "daten": {"aufgaben": lese_aufgaben([["C5", "A4", "F4", "E4"], ["B4", "E4", "F4", "E5"], ["E4", "G4", "G4", "E4"], ["D5", "A4", "C5", "B4"], ["F4", "A4", "C5", "B4"]], wert="4")}},
 ],
 }
 
