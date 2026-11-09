@@ -567,3 +567,11 @@ main.stufe-gesperrt { display: none; }
 .code-form input:focus { outline: 3px solid var(--farbe); }
 .code-meldung { font-weight: 700; color: var(--falsch); }
 .stufe.gesperrt .code-form { position: relative; z-index: 1; }
+
+/* Fortschrittscode */
+.code-bereich { margin: 0.2rem 0 1.2rem; padding: 0.6rem 0.9rem; border: 2px solid var(--tinte); border-radius: 12px; background: var(--flaeche); }
+.code-bereich summary { cursor: pointer; font-weight: 700; }
+.code-bereich p { margin: 0.6rem 0; font-size: 0.95rem; }
+.code-zeile { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.8rem; margin-bottom: 0.8rem; }
+.fortschritts-code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 1.35rem; font-weight: 700; letter-spacing: 0.08em; }
+.code-form input.lang { width: 12em; letter-spacing: 0.08em; text-transform: uppercase; }

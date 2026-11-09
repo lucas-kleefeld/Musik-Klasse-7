@@ -60,6 +60,82 @@
     });
     return form;
   }
+  /* Fortschrittscode: gelöste Übungen als kurzer Code zum Mitnehmen auf ein anderes Gerät.
+     Aufbau: 3 Bit höchste per Code freigeschaltete Stufe, dann 1 Bit je Übung (Reihenfolge aus
+     LERNPFAD.reihe), in Base32 (Crockford) und 2 Prüfzeichen. */
+  var ALPHA = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
+  function codeBits() {
+    var reihe = P.reihe || [], max = 0;
+    for (var k in daten.codes) if (daten.codes[k] && +k > max) max = +k;
+    var bits = [(max >> 2) & 1, (max >> 1) & 1, max & 1];
+    reihe.forEach(function (s) { bits.push(geloest(s) ? 1 : 0); });
+    while (bits.length > 3 && bits[bits.length - 1] === 0) bits.pop();
+    return bits;
+  }
+  function pruefzeichen(rumpf) {
+    var h = parseInt(pruefsumme(SCHLUESSEL + ":" + rumpf), 16) % 1024;
+    return ALPHA[h >> 5] + ALPHA[h & 31];
+  }
+  function fortschrittsCode() {
+    var bits = codeBits(), rumpf = "";
+    for (var i = 0; i < bits.length; i += 5) {
+      var v = 0; for (var j = 0; j < 5; j++) v = v * 2 + (bits[i + j] || 0);
+      rumpf += ALPHA[v];
+    }
+    var c = rumpf + pruefzeichen(rumpf);
+    return c.replace(/(.{4})(?=.)/g, "$1-");
+  }
+  function codeLesen(text) {
+    var c = text.toUpperCase().replace(/[\s\-–_.]/g, "").replace(/O/g, "0").replace(/[IL]/g, "1").replace(/U/g, "V");
+    if (c.length < 3 || /[^0-9A-Z]/.test(c)) return null;
+    var rumpf = c.slice(0, -2);
+    for (var i = 0; i < c.length; i++) if (ALPHA.indexOf(c[i]) < 0) return null;
+    if (pruefzeichen(rumpf) !== c.slice(-2)) return null;
+    var bits = [];
+    for (i = 0; i < rumpf.length; i++) { var v = ALPHA.indexOf(rumpf[i]); for (var j = 4; j >= 0; j--) bits.push((v >> j) & 1); }
+    var max = bits[0] * 4 + bits[1] * 2 + bits[2], geloeste = [];
+    (P.reihe || []).forEach(function (s, k) { if (bits[3 + k]) geloeste.push(s); });
+    return { stufe: max, geloeste: geloeste };
+  }
+  function codeBereich() {
+    var ziel = document.getElementById("fortschritt-code");
+    if (!ziel || !speicherOk || !(P.reihe || []).length) return;
+    var d = el("details", { class: "code-bereich" });
+    d.appendChild(el("summary", {}, "Fortschritt auf ein anderes Gerät mitnehmen"));
+    d.appendChild(el("p", {}, "Lass dir hier deinen Code anzeigen und schreib ihn ab. Auf dem anderen Gerät gibst du ihn unten ein. Danach sind deine gelösten Übungen und freigeschalteten Stufen auch dort gespeichert. Was dort schon gelöst ist, bleibt erhalten."));
+    var zeile = el("div", { class: "code-zeile" });
+    var zeigen = el("button", { class: "knopf klein", type: "button" }, "Meinen Code anzeigen");
+    var ausgabe = el("output", { class: "fortschritts-code", "aria-live": "polite" });
+    zeigen.addEventListener("click", function () {
+      ausgabe.textContent = fortschrittsCode();
+      zeigen.textContent = "Code aktualisieren";
+    });
+    zeile.appendChild(zeigen); zeile.appendChild(ausgabe);
+    d.appendChild(zeile);
+    var form = el("form", { class: "code-form" });
+    form.appendChild(el("label", { for: "fortschritt-code-feld" }, "Code von einem anderen Gerät laden:"));
+    var feld = el("input", { id: "fortschritt-code-feld", class: "lang", type: "text", autocomplete: "off", autocapitalize: "characters", spellcheck: "false", maxlength: "40" });
+    form.appendChild(feld);
+    form.appendChild(el("button", { class: "knopf klein", type: "submit" }, "Laden"));
+    var meldung = el("span", { class: "code-meldung", "aria-live": "polite" });
+    form.appendChild(meldung);
+    form.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var r = codeLesen(feld.value);
+      if (!r) { meldung.textContent = "Dieser Code stimmt nicht. Prüfe jedes Zeichen."; feld.select(); return; }
+      r.geloeste.forEach(function (s) { daten.geloest[s] = Math.max(daten.geloest[s] || 0, 1); });
+      if (r.stufe > 1) daten.codes[String(r.stufe)] = true;
+      sichern();
+      try { window.sessionStorage.setItem(SCHLUESSEL + "-geladen", String(r.geloeste.length)); } catch (e) {}
+      location.reload();
+    });
+    d.appendChild(form);
+    ziel.appendChild(d);
+    try {
+      var n = window.sessionStorage.getItem(SCHLUESSEL + "-geladen");
+      if (n != null) { window.sessionStorage.removeItem(SCHLUESSEL + "-geladen"); hinweis("Fortschritt geladen: " + n + " gelöste Übungen übernommen.", true); }
+    } catch (e) {}
+  }
   function stufeVon(slug) { for (var k in P.stufen) if (P.stufen[k].indexOf(slug) >= 0) return +k; return null; }
 
   function hinweis(text, gut) {
@@ -143,6 +219,6 @@
   }
 
   window.Fortschritt = { melden: melden, stufeFrei: stufeFrei, geloest: geloest };
-  function start() { seitenSperre(); markieren(); }
+  function start() { seitenSperre(); markieren(); codeBereich(); }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();

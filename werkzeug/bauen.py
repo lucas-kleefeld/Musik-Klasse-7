@@ -43,6 +43,17 @@ _pfad = {"stufenweise": STUFENWEISE, "namen": {str(k): v[0] for k, v in STUFEN.i
 for _nr, _slug, _t, _st in KAPITEL:
     if _nr in FREI:
         _pfad["stufen"].setdefault(str(_st), []).extend(u["slug"] for u in INHALT[_nr]["uebungen"] if u["slug"] != "abschlusstest")
+# Feste Reihenfolge der Übungen für den Fortschrittscode: neue Übungen werden nur
+# hinten angehängt, damit alte Codes gültig bleiben. Datei nicht umsortieren!
+_reihe_datei = os.path.join(REPO, "werkzeug", "code_reihenfolge.json")
+_reihe = json.load(open(_reihe_datei, encoding="utf-8")) if os.path.exists(_reihe_datei) else []
+for _nr, _slug, _t, _st in KAPITEL:
+    for u in INHALT[_nr]["uebungen"]:
+        if u["slug"] != "abschlusstest" and u["slug"] not in _reihe:
+            _reihe.append(u["slug"])
+with open(_reihe_datei, "w", encoding="utf-8") as f:
+    json.dump(_reihe, f, ensure_ascii=False, indent=1); f.write("\n")
+_pfad["reihe"] = _reihe
 with open(os.path.join(REPO, "assets", "lernpfad.js"), "w", encoding="utf-8") as f:
     f.write("/* automatisch erzeugt aus freigabe.json und den Kapiteln */\nwindow.LERNPFAD = " + json.dumps(_pfad, ensure_ascii=False) + ";\n")
 
@@ -205,7 +216,8 @@ seite("index.html", "Notenlehre", f"""
   <section class="bereich" aria-labelledby="pfad">
     <h2 id="pfad">Der Lernpfad</h2>
     <p class="hinweis">Die Kapitel bauen aufeinander auf.{" Jede Stufe wird freigeschaltet, sobald du alle Übungen der vorherigen Stufe gelöst hast (mindestens 80 Prozent richtig)." if STUFENWEISE else " Wer unsicher ist, fängt vorne an; wer schon sicher ist, springt direkt zu seinem Thema."}</p>
-    <p class="legende" id="fortschritt-info">Dein Fortschritt wird nur in diesem Browser auf diesem Gerät gespeichert. Auf einem anderen Gerät beginnst du wieder bei Stufe 1. <button class="knopf leise klein" type="button" id="fortschritt-reset">Fortschritt zurücksetzen</button></p>
+    <p class="legende" id="fortschritt-info">Dein Fortschritt wird nur in diesem Browser auf diesem Gerät gespeichert. Mit einem Fortschrittscode kannst du auf einem anderen Gerät weitermachen. <button class="knopf leise klein" type="button" id="fortschritt-reset">Fortschritt zurücksetzen</button></p>
+    <div id="fortschritt-code"></div>
     <div class="lernpfad">{''.join(pfad)}</div>
     {abschluss}
   </section>
